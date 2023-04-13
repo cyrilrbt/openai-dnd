@@ -12,7 +12,7 @@
       />
     </div>
     <div v-if="loading" class="mt-4">Generating response...</div>
-    <div v-for="step in story.steps.slice().reverse()" :key="step.image" class="mt-4">
+    <div v-for="step in storyStore.steps.slice().reverse()" :key="step.image" class="mt-4">
       <div class="mb-2"><p><b>&gt;&gt;</b> {{ step.prompt }}</p></div>
       <div class="grid grid-cols-2 gap-2">
         <div><p>{{ step.response }}</p></div>
@@ -25,27 +25,27 @@
 
 <script>
 import { ref } from 'vue';
-import { chatgpt, chatgpt_out, dalle } from '@/api';
+import { chatgpt, story, dalle } from '@/api';
 import { useStoryStore } from "../stores/storyStore";
 
 export default {
   setup() {
     const input = ref('');
     const loading = ref(false);
-    const story = useStoryStore();
+    const storyStore = useStoryStore();
 
     async function sendInput() {
       if (!input.value) return;
       loading.value = true;
 
-      const response = await chatgpt(`${input.value}`);
+      const response = await story(`${input.value}`);
       const text = response.choices[0].message.content.trim();
 
-      const itxtResponse = await chatgpt_out(`Summarize the following text in 980 characters so it can be used to generate a picture of the scene. ${text}`)
+      const itxtResponse = await chatgpt([{role: "user", content: `Summarize the following text in 980 characters so it can be used to generate a picture of the scene. ${text}`}])
       const imgtxt = itxtResponse.choices[0].message.content.trim();
       const imageResponse = await dalle(imgtxt);
 
-      story.addStep({
+      storyStore.addStep({
         prompt: input.value,
         response: text,
         image: imageResponse.data ? imageResponse.data[0].url : null,
@@ -55,7 +55,7 @@ export default {
       loading.value = false;
     }
 
-    return { input, sendInput, story, loading };
+    return { input, sendInput, storyStore, loading };
   },
 };
 </script>

@@ -19,7 +19,7 @@
 <script>
 import { ref } from 'vue';
 import { useCampaignStore } from '@/stores/campaignStore';
-import { chatgpt } from '@/api';
+import { story } from '@/api';
 
 export default {
   setup() {
@@ -30,7 +30,7 @@ export default {
       const prompt = `Generate an original campaign and start the game.
         Keep it concise and don't give spoilers, but give enough information to know how to get started.
         Dont ask me to roll dice, do it yourself quietly.`;
-      const response = await chatgpt(prompt);
+      const response = await story(prompt);
       console.log("Got a campaign", response);
       const campaignText = response.choices[0].message.content.trim();
 
@@ -77,7 +77,7 @@ export default {
           ]
         }
         `;
-      const response = await chatgpt(prompt);
+      const response = await story(prompt);
       console.log("Got a character", response);
       const characterText = response.choices[0].message.content.trim();
 

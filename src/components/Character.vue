@@ -40,7 +40,7 @@
 
 <script>
 import { useCampaignStore } from '@/stores/campaignStore';
-import { chatgpt } from '@/api';
+import { story } from '@/api';
 
 export default {
   setup() {
@@ -48,7 +48,7 @@ export default {
 
     async function updateCharacter() {
       const prompt = `Update my inventory and hit points.
-        Only provide a  RFC8259 compliant JSON response following this format without deviation, explanation, or introduction.
+        Only provide a  RFC8259 compliant JSON response following this format without any deviation, explanation, notes, or introduction.
         {
           "name": "Character's name",
           "race": "Character's race",
@@ -80,12 +80,12 @@ export default {
           ]
         }
         `;
-      const response = await chatgpt(prompt);
+      const response = await story(prompt);
       console.log("Got a character update", response);
       const characterText = response.choices[0].message.content.trim();
 
       console.log(characterText);
-      const data = JSON.parse(characterText);
+      const data = JSON.parse(characterText.split("\n\n")[0]);
 
       campaignStore.setCharacter(data);
     }
