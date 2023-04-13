@@ -67,11 +67,11 @@ export default {
           },
           "stats": {
             "strength": "Character's strength",
-            "dexterity": "Character's strength",
-            "constitution": "Character's strength",
-            "intelligence": "Character's strength",
-            "wisdom": "Character's strength",
-            "charisma": "Character's strength",
+            "dexterity": "Character's dexterity",
+            "constitution": "Character's constitution",
+            "intelligence": "Character's intelligence",
+            "wisdom": "Character's wisdom",
+            "charisma": "Character's charisma",
           },
           "inventory": [
             "item 1",
