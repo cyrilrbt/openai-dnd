@@ -27,9 +27,9 @@ export default {
     const campaign = ref(campaignStore.campaign);
 
     async function generateCampaign() {
-      const prompt = `Generate an original campaign and start the game.
+      const prompt = `Generate an original single player campaign and start the game.
         Keep it concise and don't give spoilers, but give enough information to know how to get started.
-        Dont ask me to roll dice, do it yourself quietly.`;
+        Dont ask me to roll the dice, do it yourself and show the results.`;
       const response = await story(prompt);
       console.log("Got a campaign", response);
       const campaignText = response.choices[0].message.content.trim();
@@ -43,7 +43,7 @@ export default {
     async function generateCharacter() {
       const prompt = `Act as a dungeons and dragons dungeon master from now on.
         Do not start a campaign yet.
-        Create a new random character for me.
+        Create a new random level 1 character for me.
         Use the character stats and a dice roll to make decisions.
         Do not include any explanations, only provide a  RFC8259 compliant JSON response following this format without deviation.
         {
