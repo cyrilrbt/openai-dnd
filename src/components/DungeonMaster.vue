@@ -12,7 +12,7 @@
       />
     </div>
     <div v-if="loading" class="mt-4">Generating response...</div>
-    <div v-for="step in storyStore.steps.slice().reverse()" :key="step.image" class="mt-4">
+    <div v-for="step in storyStore.steps" :key="step.image" class="mt-4">
       <div class="mb-2"><p><b>&gt;&gt;</b> {{ step.prompt }}</p></div>
       <div class="grid grid-cols-2 gap-2">
         <div><p>{{ step.response }}</p></div>

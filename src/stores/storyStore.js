@@ -7,7 +7,10 @@ export const useStoryStore = defineStore({
   }),
   actions: {
     addStep(step) {
-      this.steps.push(step);
+      this.steps.unshift(step);
+    },
+    clear() {
+      this.steps = [];
     },
   },
 });

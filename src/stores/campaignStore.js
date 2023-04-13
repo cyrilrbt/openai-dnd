@@ -13,5 +13,9 @@ export const useCampaignStore = defineStore({
     setCharacter(character) {
       this.character = character;
     },
+    clear() {
+      this.campaign = null;
+      this.character = null;
+    },
   },
 });

@@ -1,8 +1,9 @@
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-bold mb-4">Character <button v-if="campaignStore.character" class="ml-2" @click="updateCharacter()">🔄</button></h1>
+    <h1 class="text-2xl font-bold mb-4">Character</h1>
     <div v-if="campaignStore.character">
       <h2 class="text-xl font-bold mb-2">{{ campaignStore.character.name }}, Level {{ campaignStore.character.level }} {{ campaignStore.character.race }} {{ campaignStore.character.class }}</h2>
+      <button class="bg-blue-500 text-white px-4 py-2 mb-4 font-semibold rounded text-sm" @click="updateCharacter()">Reload inventory</button>
       <div class="mb-4 grid grid-cols-2 gap-2">
         <div>
           <h3 class="text-lg font-semibold">Stats</h3>

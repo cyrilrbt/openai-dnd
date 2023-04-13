@@ -9,5 +9,8 @@ export const useMessagesStore = defineStore({
     addMessage(message) {
       this.messages.push(message);
     },
+    clear() {
+      this.messages = [];
+    },
   },
 });

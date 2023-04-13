@@ -1,11 +1,11 @@
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-bold mb-4">Campaign</h1>
-    <div v-if="campaign">
-      <p>{{ campaign.description }}</p>
-      <button class="bg-red-500 text-white px-4 py-2 mt-4 rounded" @click="startNewCampaign">
+    <h1 class="text-2xl font-bold mb-2">Campaign</h1>
+    <div v-if="campaignStore.campaign">
+      <button class="bg-red-500 text-white px-4 py-2 mb-4 font-semibold rounded" @click="startNewCampaign">
         Start New Campaign
       </button>
+      <p>{{ campaignStore.campaign.description }}</p>
     </div>
     <div v-else>
       <p>No active campaign. Click the button below to start a new one.</p>
@@ -17,14 +17,17 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import { useCampaignStore } from '@/stores/campaignStore';
+import { useStoryStore } from '@/stores/storyStore';
+import { useMessagesStore } from '@/stores/messagesStore';
 import { story } from '@/api';
 
 export default {
   setup() {
     const campaignStore = useCampaignStore();
-    const campaign = ref(campaignStore.campaign);
+    const storyStore = useStoryStore();
+    const messagesStore = useMessagesStore();
+
 
     async function generateCampaign() {
       const prompt = `Generate an original single player campaign and start the game.
@@ -100,15 +103,18 @@ export default {
     }
 
     async function startNewCampaign() {
+      campaignStore.clear();
+      storyStore.clear();
+      messagesStore.clear();
+
       const newCharacter = await generateCharacter();
       campaignStore.setCharacter(newCharacter);
 
       const newCampaign = await generateCampaign();
       campaignStore.setCampaign(newCampaign);
-      campaign.value = newCampaign;
     }
 
-    return { campaign, startNewCampaign };
+    return { campaignStore, startNewCampaign };
   },
 };
 </script>
